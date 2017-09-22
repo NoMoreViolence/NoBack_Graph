@@ -1,8 +1,30 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color: rgba(0, 187, 255, 0.21);
+    margin: 1%;
+    padding: 0px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+.Header {
+    margin: 2%;
+}
+
+.object {
+    margin-top: 4%;
+    margin-bottom: 0px;
+    margin-left: 2%;
+    margin-right: 0px;
+}
+
+.Header a {
+    text-decoration: none;
+    font: 30px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.Header a:link {
+    color: rgba(115, 44, 196, 0.56);
+}
+
+.Header a:visited {
+    color: rgba(115, 44, 196, 0.56);
 }
