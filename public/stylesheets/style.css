@@ -75,3 +75,19 @@ body {
     text-decoration: none;
     font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+
+
+/* 그래프 게임 동작 부분 */
+
+.middle {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+
+/* 도네이션 */
+
+.middle .donation {
+    margin: auto;
+}
