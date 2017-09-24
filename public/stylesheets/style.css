@@ -1,30 +1,77 @@
+/* 제이미 바디 */
+
 body {
     background-color: rgba(0, 187, 255, 0.21);
-    margin: 1%;
-    padding: 0px;
+    margin: 0%;
+    padding: 0%;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+
+/* 최종 컨테이너 */
+
+.container {
+    margin: 1%;
+}
+
+
+/* 페이지 로고 || 페이지 메뉴 */
+
 .Header {
     margin: 2%;
+    display: flex;
 }
+
+
+/* 홈페이지 제목 || a 태그 수정 */
 
 .object {
-    margin-top: 4%;
-    margin-bottom: 0px;
+    margin-top: 2%;
+    margin-bottom: 0%;
     margin-left: 2%;
-    margin-right: 0px;
+    margin-right: 2%;
 }
 
-.Header a {
+.object a {
     text-decoration: none;
     font: 30px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-.Header a:link {
+.object a:link {
     color: rgba(115, 44, 196, 0.56);
 }
 
-.Header a:visited {
+.object a:visited {
     color: rgba(115, 44, 196, 0.56);
+}
+
+
+/* 홈페이지 메뉴 */
+
+.menu {
+    margin-top: 3%;
+    margin-bottom: 0%;
+    margin-left: 0%;
+    margin-right: 0%;
+    padding: 0%;
+}
+
+.menu ol {
+    display: flex;
+    list-style: none;
+    margin: 1%;
+    padding: 0%;
+}
+
+.menu li {
+    margin-right: 0%;
+    margin-left: 25%;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    padding: 0%;
+}
+
+.menu a {
+    text-decoration: none;
+    font: 15px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
