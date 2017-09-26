@@ -3,9 +3,10 @@
 
 <head>
     <title>Graph_Game</title>
-    <script src='/javascripts/mainscript.js'>
-        
-    </script>
+    <% if(game === true) { %>
+        <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+        <script src='/javascripts/mainscript.js'></script>
+    <% } %>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
@@ -35,7 +36,7 @@
                     <!-- 그래프, 접속사람들 -->
                     <div class="top">
                         <div class="graph">
-                            
+                            <button type="button" id="example">Hey</button>
                        </div>
                         <div class="people">
                         

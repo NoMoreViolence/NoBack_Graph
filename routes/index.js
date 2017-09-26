@@ -1,6 +1,6 @@
 // 모듈
 const express = require('express');
-
+// Router
 const router = express.Router();
 
 // 홈페이지
@@ -18,7 +18,6 @@ router.get('/', (req, res) => {
 router.get('/favicon.ico', (req, res) => {
   res.status(200);
 });
-
 // 게임 시작
 router.get('/start', (req, res) => {
   res.render('index', {
@@ -28,7 +27,6 @@ router.get('/start', (req, res) => {
     setting: false,
   });
 });
-
 // 랭킹
 router.get('/rank', (req, res) => {
   res.render('index', {
@@ -38,7 +36,6 @@ router.get('/rank', (req, res) => {
     setting: false,
   });
 });
-
 // 도네이션
 router.get('/donation', (req, res) => {
   res.render('index', {
@@ -48,7 +45,6 @@ router.get('/donation', (req, res) => {
     setting: false,
   });
 });
-
 // 세팅
 router.get('/setting', (req, res) => {
   res.render('index', {
