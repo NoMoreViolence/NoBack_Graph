@@ -8,10 +8,8 @@ const app = require('../app');
 const debug = require('debug')('noback-graph:server');
 const http = require('http');
 
-/**
- * Normalize a port into a number, string, or false.
- */
 
+// 포트를 숫자, 문자열 또는 거짓으로 표준화합니다.
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
 
@@ -86,7 +84,15 @@ const listening = () => {
 /**
  * Listen on provided port, on all network interfaces.
  */
+// 소켓 io server 가동
+const io = require('socket.io')(server);
+
 // 서버 가동
 server.listen(port);
 server.on('error', Error);
 server.on('listening', listening);
+
+io.on('Example', (a) => {
+  a = false;
+  return a;
+});
