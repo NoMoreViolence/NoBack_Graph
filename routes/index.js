@@ -16,9 +16,7 @@ router.get('/', (req, res) => {
 });
 // favicon.ico 오류 처리
 router.get('/favicon.ico', (req, res) => {
-  console.log('favicon error cleaned');
-  console.log('abcd');
-  res.status(204);
+  res.status(200);
 });
 
 // 게임 시작

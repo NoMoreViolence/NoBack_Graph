@@ -8,7 +8,7 @@
 
 <body>
     <div class="container">
-        <div class="Header">
+        <div class="header">
             <div class="object">
                 <a href="/">Graph</a>
             </div>
@@ -22,10 +22,37 @@
             </div>
         </div>
         <div class="middle">
-            <% if(donation == true) { %>
+            <% if(game === true) { %>
+                <div class="game">
+                    <div class="top">
+                        <div class="graph">
+                            
+                       </div>
+                        <div class="people">
+                        
+                        </div>
+                    </div>
+                    <div class="bottom">
+                       <div class="chat">
+                        
+                        </div>
+                        <div class="record">
+                        
+                        </div>
+                        <div class="bet">
+                        
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+
+            <% if(donation === true) { %>
                 <div class="donation">
                     <p>기업은행 01086029926</p>
-                    <p>후원을 하면 복이 와요</p>
+                    <p>1인 개발자 입니다</p>
+                    <p>서버를 돌리는데 도움이 필요합니다</p>
+                    <p>후원은 서버개발과 공부에 큰 도움이 됩니다</p>
+                    <p>도와주세요</p>
                 </div>
             <% } %>
         </div>
