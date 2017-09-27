@@ -62,9 +62,7 @@ const listening = () => {
 };
 
 // 소켓 io server 가동
-const io = require('socket.io')(server, () => {
-  console.log('소켓 연결 성공');
-});
+const io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
   console.log('User Connected');

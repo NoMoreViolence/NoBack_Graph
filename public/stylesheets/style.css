@@ -115,18 +115,48 @@ body {
   height: calc(100% - 1%);
   display: flex;
 }
-.game .bottom .chat {
+.game .bottom .chart {
   width: calc(60% - 1%);
   height: 230px;
   margin: 1%;
   border: 1px solid black;
+  display: flex;
+}
+.game .bottom .select {
+  width: calc(10% - 1%);
+  margin: 1%;
+}
+.game .bottom .select button {
+  width: 100%;
+  height: 50%;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  color: rebeccapurple;
+  background-color: rgba(255, 255, 255, 0.54);
+}
+.game .bottom .select button:hover {
+  background-color: rgba(255, 255, 255, 0.91);
+  color: rgba(0, 154, 201, 0.6);
+  border-color: rgba(0, 154, 201, 0.6);
+}
+.game .bottom .select button:focus {
+  outline: none;
+}
+.game .bottom .select button:active {
+  color: rebeccapurple;
+  background-color: rgba(0, 154, 201, 0.6);
+}
+.game .bottom .chat {
+  width: calc(90% - 1%);
+  margin: 1%;
+  border: 1px solid gray;
   display: none;
 }
 .game .bottom .record {
-  width: calc(60% - 1%);
-  height: 230px;
+  width: calc(90% - 1%);
   margin: 1%;
-  border: 1px solid black;
+  border: 1px solid gray;
   display: block;
 }
 .game .bottom .bet {

@@ -4,8 +4,9 @@
 <head>
     <title>Graph_Game</title>
     <% if(game === true) { %>
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
-        <script src='/javascripts/mainscript.js'></script>
+        <script src='/javascripts/gamescript.js'></script>
     <% } %>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
@@ -36,7 +37,7 @@
                     <!-- 그래프, 접속사람들 -->
                     <div class="top">
                         <div class="graph">
-                            <button type="button" id="example">Hey</button>
+                        
                        </div>
                         <div class="people">
                         
@@ -44,12 +45,24 @@
                     </div>
                     <!-- 채팅, 기록, 베팅 -->
                     <div class="bottom">
-                       <div class="chat">
-                        
+
+                        <!-- 채팅, 기록 -->
+                        <div class="chart">
+                            <!-- 버튼 -->
+                            <div class="select">
+                                <button type="button" id="btn1">Record</button>
+                                <button type="button" id="btn2">Chat</button>
+                            </div>
+                            <!-- 채팅 -->
+                            <div class="chat">
+                                chat part
+                            </div>
+                            <!-- 기록 -->
+                            <div class="record">
+                                record part
+                            </div>
                         </div>
-                        <div class="record">
-                        
-                        </div>
+                        <!-- 베팅 -->
                         <div class="bet">
                         
                         </div>
