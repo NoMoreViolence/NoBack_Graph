@@ -115,6 +115,9 @@ body {
   height: calc(100% - 1%);
   display: flex;
 }
+
+/* 채팅, 기록 */
+
 .game .bottom .chart {
   width: calc(60% - 1%);
   height: 230px;
@@ -122,10 +125,16 @@ body {
   border: 1px solid black;
   display: flex;
 }
+
+/* 버튼 div */
+
 .game .bottom .select {
   width: calc(10% - 1%);
   margin: 1%;
 }
+
+/* record, chat 버튼 */
+
 .game .bottom .select button {
   width: 100%;
   height: 50%;
@@ -147,12 +156,55 @@ body {
   color: rebeccapurple;
   background-color: rgba(0, 154, 201, 0.6);
 }
+
+/* 채팅 */
+
 .game .bottom .chat {
   width: calc(90% - 1%);
   margin: 1%;
   border: 1px solid gray;
   display: none;
 }
+
+/* 채팅 보이는 부분 */
+
+.game .bottom .chat .ear {
+  width: auto;
+  height: 75%;
+  margin: 1%;
+  padding: 1%;
+  background-color: rgba(255, 255, 255, 0.54);
+}
+
+/* 채팅 메시지 */
+
+.game .bottm .chat .ear .sound {
+  display: flex;
+}
+
+/* 채팅 입력 부분 */
+
+.game .bottom .chat .mouth {
+  width: auto;
+  height: 10%;
+  margin: 1%;
+  background-color: rgba(255, 255, 255, 0.54);
+}
+.game .bottom .chat .mouth input {
+  width: auto;
+  height: 10%;
+  margin: 1%;
+  background-color: rgba(255, 255, 255, 0.54);
+}
+.game .bottom .chat .mouth button {
+  width: auto;
+  height: 10%;
+  margin: 1%;
+  background-color: rgba(255, 255, 255, 0.54);
+}
+
+/* 게임기록 */
+
 .game .bottom .record {
   width: calc(90% - 1%);
   margin: 1%;
