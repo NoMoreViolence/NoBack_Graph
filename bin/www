@@ -67,8 +67,9 @@ const io = require('socket.io')(server);
 io.on('connection', (socket) => {
   console.log('User Connected');
 
-  socket.on('Example', () => {
-    console.log('Hello');
+  socket.on('SendMessage', (data) => {
+    console.log(data);
+    io.sockets.emit('ResMessage', data.message);
   });
 });
 

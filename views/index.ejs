@@ -7,8 +7,8 @@
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
         <script src='/javascripts/gamescript.js'></script>
-    <% } %>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+        <% } %>
+            <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
 <body>
@@ -30,22 +30,21 @@
             <% if(game === true) { %>
                 <!-- 이름 적는 부분 -->
                 <div class="namespace">
-                    
+
                 </div>
                 <!-- 게임 플레이 부분 -->
                 <div class="game">
                     <!-- 그래프, 접속사람들 -->
                     <div class="top">
                         <div class="graph">
-                        
-                       </div>
+
+                        </div>
                         <div class="people">
-                        
+                            
                         </div>
                     </div>
                     <!-- 채팅, 기록, 베팅 -->
                     <div class="bottom">
-
                         <!-- 채팅, 기록 -->
                         <div class="chart">
                             <!-- 버튼 -->
@@ -56,18 +55,11 @@
                             <!-- 채팅 -->
                             <div class="chat">
                                 <div class="ear">
-                                    <div class="sound">
-                                        <div>
-                                            
-                                        </div>
-                                        <div>
-                                            
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <div class="mouth">
-                                    <input type="text" class="chat-text" placeholder="Input Your Message">
-                                    <button type="button" class="chat-btn">Send</button>
+                                    <input type="text" class="tongue" placehoder="Input Your Message">
+                                    <input type="submit" class="sound" value="Send">
                                 </div>
                             </div>
                             <!-- 기록 -->
@@ -77,22 +69,21 @@
                         </div>
                         <!-- 베팅 -->
                         <div class="bet">
-                        
+
                         </div>
                     </div>
-                </div>
-            <% } %>
+                    <% } %>
 
-            <% if(donation === true) { %>
-                <div class="donation">
-                    <p>기업은행 01086029926</p>
-                    <p>1인 개발자 입니다</p>
-                    <p>서버를 돌리는데 도움이 필요합니다</p>
-                    <p>후원은 서버개발과 공부에 큰 도움이 됩니다</p>
+                        <% if(donation === true) { %>
+                            <div class="donation">
+                                <p>기업은행 01086029926</p>
+                                <p>1인 개발자 입니다</p>
+                                <p>서버를 돌리는데 도움이 필요합니다</p>
+                                <p>후원은 서버개발과 공부에 큰 도움이 됩니다</p>
+                            </div>
+                            <% } %>
                 </div>
-            <% } %>
         </div>
-    </div>
 </body>
 
 </html>
