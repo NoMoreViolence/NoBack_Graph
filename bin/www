@@ -8,7 +8,7 @@ const server = require('http').createServer(app);
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
 
-  if (isNaN(port)) {
+  if (Number.isNaN(port)) {
     // named pipe
     return val;
   }
@@ -68,8 +68,8 @@ io.on('connection', (socket) => {
   console.log('User Connected');
 
   socket.on('SendMessage', (data) => {
-    console.log(data);
-    io.sockets.emit('ResMessage', data.message);
+    console.log(`${data.name}: ${data.message}`);
+    io.emit('ResMessage', { msg: data.message, name: data.name });
   });
 });
 

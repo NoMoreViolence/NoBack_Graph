@@ -5,7 +5,7 @@
     <title>Graph_Game</title>
     <% if(game === true) { %>
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
         <script src='/javascripts/gamescript.js'></script>
         <% } %>
             <link rel='stylesheet' href='/stylesheets/style.css' />
@@ -28,9 +28,10 @@
         </div>
         <div class="middle">
             <% if(game === true) { %>
-                <!-- 이름 적는 부분 -->
+                <!-- 이름 입력 부분 -->
                 <div class="namespace">
-
+                    <input type="text" class="name_io" name="username" placehoder="Input Your Name">
+                    <button type="submit" class="btn_io">Submit</button>
                 </div>
                 <!-- 게임 플레이 부분 -->
                 <div class="game">
@@ -40,7 +41,7 @@
 
                         </div>
                         <div class="people">
-                            
+
                         </div>
                     </div>
                     <!-- 채팅, 기록, 베팅 -->
@@ -55,7 +56,7 @@
                             <!-- 채팅 -->
                             <div class="chat">
                                 <div class="ear">
-                                    
+
                                 </div>
                                 <div class="mouth">
                                     <input type="text" class="tongue" placehoder="Input Your Message">

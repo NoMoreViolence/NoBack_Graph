@@ -2,7 +2,6 @@
 const express = require('express');
 // Router
 const router = express.Router();
-
 // 홈페이지
 router.get('/', (req, res) => {
   // game, rank, donation, setting
@@ -14,11 +13,7 @@ router.get('/', (req, res) => {
     setting: false,
   });
 });
-// favicon.ico 오류 처리
-router.get('/favicon.ico', (req, res) => {
-  res.status(200);
-});
-// 게임 시작
+// 유저 이름 입력 레이아웃
 router.get('/start', (req, res) => {
   res.render('index', {
     game: true,
