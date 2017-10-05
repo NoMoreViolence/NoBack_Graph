@@ -3,6 +3,9 @@ $('document').ready(() => {
   const socket = io();
   let username;
 
+  /*
+      이름 입력
+  */
   // 이름 입력 버튼
   $('.btn_io').on('click', () => {
     const name = $('.name_io');
@@ -11,11 +14,7 @@ $('document').ready(() => {
       alert('Input Your Name');
       return;
     }
-    username = name.val();
-    name.val('');
-
-    $('.namespace').css('display', 'none');
-    $('.game').css('display', 'block');
+    socket.emit('NameCheck', { name: name.val() });
   });
   // 이름 입력 버튼 Enter
   $('.name_io').on('keydown', (key) => {
@@ -26,13 +25,31 @@ $('document').ready(() => {
         alert('Input Your Name');
         return;
       }
-      username = name.val();
-      name.val('');
+      socket.emit('NameCheck', { name: name.val() });
+    }
+  });
+  // 이름 소켓 받았을 때
+  socket.on('NameCheck', (data) => {
+    $('.name_io').val('');
+
+    if (data.data === true) {
+      username = data.name;
 
       $('.namespace').css('display', 'none');
       $('.game').css('display', 'block');
+
+      return;
     }
+    alert('Already Someone Chosen Your name, Choice another.');
   });
+  /*
+      이름 입력
+  */
+
+
+  /*
+      게임과 관련된 버튼
+  */
   // 게임 기록 버튼 and 게임 채팅 버튼
   $('#btn1').on('click', () => {
     $('.record').css('display', 'block');
@@ -44,8 +61,6 @@ $('document').ready(() => {
     $('.chat').css('display', 'block');
     return false;
   });
-
-
   // 채팅 메시지 보낼 때 Enter
   $('.tongue').on('keydown', (key) => {
     if (key.keyCode === 13) {
@@ -68,7 +83,6 @@ $('document').ready(() => {
     if (msg.val() === '') {
       return;
     }
-
     // socket 전송
     socket.emit('SendMessage', { message: msg.val(), name: username });
     msg.val('');
@@ -78,4 +92,7 @@ $('document').ready(() => {
     $('.ear').append(`<div>${data.name}: ${data.msg}</div>`);
     $('.ear').scrollTop($('.ear')[0].scrollHeight);
   });
+  /*
+      게임과 관련된 버튼
+  */
 });
