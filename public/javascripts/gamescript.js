@@ -34,10 +34,8 @@ $('document').ready(() => {
 
     if (data.data === true) {
       username = data.name;
-
       $('.namespace').css('display', 'none');
       $('.game').css('display', 'block');
-
       return;
     }
     alert('Already Someone Chosen Your name, Choice another.');
