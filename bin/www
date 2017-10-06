@@ -4,7 +4,6 @@ const app = require('../app');
 const debug = require('debug')('myapp:server');
 const server = require('http').createServer(app);
 
-// sex3
 // 포트 번호 함수
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
@@ -61,7 +60,7 @@ const listening = () => {
     `port ${addr.port}`;
   debug(`Listening on ${bind}`);
 };
-
+//sex4
 // 소켓 io server 가동
 const io = require('socket.io')(server);
 
