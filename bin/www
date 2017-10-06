@@ -67,24 +67,51 @@ const io = require('socket.io')(server);
 
 const names = [];
 io.on('connection', (socket) => {
-  console.log('User Connected');
+  console.log('Connected');
+  let check = false; // 중복 이름 체크 방지 변수
+  let username; // 이름
+  console.log('새로운 사용자 접근');
 
   // 이름 중복체크
   socket.on('NameCheck', (data) => {
+    if (data.name === '' && check === false) { // 이름 null 체크, 중복 이름 체크 방지
+      io.to(socket.id).emit('NameCheck', { data: true, name: data.name }); // true 보냄
+      return;
+    }
     for (let index = 0; index < names.length; index += 1) { // 중복체크 for 문
       if (names[index] === data.name) { // 배열의 이름 데이터와 비교
         io.to(socket.id).emit('NameCheck', { data: false, name: null }); // 중복일 때에는 false를 보냄
         return;
       }
     }
-    names.push(data.name); // 중복이 아닐 때에는 데이터를 배열에 넣음
-    io.to(socket.id).emit('NameCheck', { data: true, name: data.name }); // true 보냄
+    username = data.name;
+    names.push(username); // 중복이 아닐 때에는 데이터를 배열에 넣음
+    console.log(names);
+    check = true; // 이름 등록 완료
+    console.log(`이름 체크 완료 ${socket.id}s check: ${check}`);
+    io.to(socket.id).emit('NameCheck', { data: true, name: username }); // true 보냄
   });
 
   // 메시지 수신
   socket.on('SendMessage', (data) => {
-    console.log(`${data.name}: ${data.message}`);
-    io.emit('ResMessage', { msg: data.message, name: data.name });
+    if (check === false) {
+      console.log('잘못된 접근');
+      console.log(`이름 없는 사용자: 채팅 접근 ${socket.id}`);
+      io.to(socket.id).emit('Err');
+      return;
+    }
+    console.log(`${socket.id}s check: ${check}`);
+    console.log(`${username}: ${data.message}`);
+    io.emit('ResMessage', { msg: data.message, name: username });
+  });
+
+  socket.on('disconnect', () => {
+    for (let index = 0; index < names.length; index += 1) { // 중복체크 for 문
+      if (names[index] === username) { // 배열의 이름 데이터와 비교
+        names.splice(index, 1);
+        return;
+      }
+    }
   });
 });
 

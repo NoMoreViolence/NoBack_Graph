@@ -6,7 +6,8 @@ module.exports = {
     "use-isnan": 0,
     "no-self-compare": 0,
     "no-alert": 0,
-    "no-undef": 0
+    "no-undef": 0,
+    "no-unused-vars": 0
   }
 
 };

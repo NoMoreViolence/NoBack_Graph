@@ -2,7 +2,7 @@ $('document').ready(() => {
   // 소켓을 연결합니다
   const socket = io();
   let username;
-  // awefjo;awejf;oawejf
+
   /*
       이름 입력
   */
