@@ -1,7 +1,7 @@
 $('document').ready(() => {
   // 소켓을 연결합니다
   const socket = io();
-  let username;
+  let username = null;
 
   /*
       이름 입력
@@ -34,6 +34,7 @@ $('document').ready(() => {
 
     if (data.data === true) {
       username = data.name;
+      $('.money').append(`${data.cash}`);
       $('.namespace').css('display', 'none');
       $('.game').css('display', 'block');
       return;

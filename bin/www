@@ -61,46 +61,57 @@ const listening = () => {
   debug(`Listening on ${bind}`);
 };
 
+// 게임
+const graph = () => {
+  const zero = Math.floor(Math.random() * 101);
+
+  if (zero === 0) {
+    return zero;
+  }
+  return 100;
+};
+
+// 게임
+
 // 소켓 io server 가동
 const io = require('socket.io')(server);
 
 const names = [];
 io.on('connection', (socket) => {
-  console.log('Connected');
+  console.log('New Gamer Connected');
   let check = false; // 중복 이름 체크 방지 변수
-  let username; // 이름
-  console.log('새로운 사용자 접근');
+  let username = null; // 이름
+  let money = 0; // 돈
 
-  // 이름 중복체크
-  socket.on('NameCheck', (data) => {
-    username = data.name;
-    if (username === '' && check === false) { // 이름 null 체크, 중복 이름 체크 방지
-      io.to(socket.id).emit('NameCheck', { data: true, name: username }); // true 보냄
+  socket.on('NameCheck', (data) => { // 게임 회원 등록
+    if (data.name === '' || check === true) { // 이름 null 체크, 부여된 이름 변경 방지
+      io.to(socket.id).emit('NameCheck', { data: false, name: null }); // true 보냄
       return;
     }
     for (let index = 0; index < names.length; index += 1) { // 중복체크 for 문
-      if (names[index] === username) { // 배열의 이름 데이터와 비교
-        io.to(socket.id).emit('NameCheck', { data: false, name: null }); // 중복일 때에는 false를 보냄
+      if (names[index] === data.name) { // 배열의 이름 데이터와 비교
+        io.to(socket.id).emit('NameCheck', { data: false, name: null }); // false를 보냄
         return;
       }
     }
 
-    names.push(username); // 중복이 아닐 때에는 데이터를 배열에 넣음
-    console.log(`User added: ${names}`);
-    check = true; // 이름 등록 완료
+    username = data.name; // 이름
+    names.push(username); // 올바른 이름 등록: 이름 배열에 넣음
+    check = true; // 이름 부여 완료
+    money = 100000; // 처음 돈 십만원
     console.log(`Name Check Success ${username}`);
-    io.to(socket.id).emit('NameCheck', { data: true, name: username }); // true 보냄
+    io.to(socket.id).emit('NameCheck', { data: true, name: username, cash: money }); // true 보냄
   });
 
-  // 메시지 수신
+
+  // 메시지
   socket.on('SendMessage', (data) => {
-    if (check === false) {
-      console.log('잘못된 접근');
-      console.log(`이름 없는 사용자: 채팅 접근 ${socket.id}`);
+    if (check === false) { // 인가된 사용자가 아님
+      console.log('Wrong Connection');
+      console.log(`None Name User: Chatting access denied ${socket.id}`);
       io.to(socket.id).emit('Err');
       return;
     }
-    console.log(`${socket.id}s check: ${check}`);
     console.log(`${username}: ${data.message}`);
     io.emit('ResMessage', { msg: data.message, name: username });
   });
