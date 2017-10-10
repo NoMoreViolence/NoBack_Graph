@@ -1,12 +1,11 @@
-/*
-const graph = () => { // 그래프 함수
+const digit = () => { // 자릿수 함수
   let zero = Math.floor(Math.random() * 100); // 100분의 1 확률로 그래프는 0이 된다
   zero = Number(zero);
   if (zero === 0) {
     return zero; // 그래프 0
   }
 
-  let hundred = Math.floor(Math.random() * 20); // 20분의 1 확률로 100의자리
+  let hundred = Math.floor(Math.random() * 100); // 100분의 1 확률로 100의자리
   hundred = Number(hundred);
   if (hundred === 0) {
     hundred = 100;
@@ -22,13 +21,6 @@ const graph = () => { // 그래프 함수
 
   return 1; // 그래프 1의자리
 };
-let a = 0;
-while (a < 10) {
-  console.log(graph());
-  a += 1;
-}
-console.log('HaHaHa');
-*/
 const ONE = () => { // 일의자리 함수
   let temp = Math.floor(Math.random() * 10);
 
@@ -42,9 +34,29 @@ const TEN = () => { // 십의자리 함수
   let temp = Math.floor(Math.random() * 9) + 1;
 
   if (temp === 1 || temp === 2 || temp === 3 || temp === 4) {
-    return 1;
+    return 10;
   }
   temp = Math.floor(Math.random() * 9) + 1;
+  return temp * 10;
+};
+const UNDER = () => { // 소수점
+  let temp = (Math.random() * 1);
+  temp = temp.toFixed(2);
+  temp *= 1;
+  if (temp === 0) {
+    temp = UNDER();
+  }
   return temp;
 };
-console.log(TEN());
+const graph = (num) => { // 그래프 함수
+  if (num === 0) {
+    return 0; // 0
+  } else if (num === 1) {
+    return ONE() + UNDER(); // 1의자리
+  } else if (num === 10) {
+    return TEN() + ONE() + UNDER(); // 10의자리
+  }
+  return 100; // 100
+};
+
+console.log(graph(digit()));
