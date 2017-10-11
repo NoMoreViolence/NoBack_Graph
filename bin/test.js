@@ -49,14 +49,53 @@ const UNDER = () => { // 소수점
   return temp;
 };
 const graph = (num) => { // 그래프 함수
+  let temp = 0;
   if (num === 0) {
     return 0; // 0
   } else if (num === 1) {
-    return ONE() + UNDER(); // 1의자리
+    temp = ONE() + UNDER();
+    temp = temp.toFixed(2);
+    return temp; // 1의자리
   } else if (num === 10) {
-    return TEN() + ONE() + UNDER(); // 10의자리
+    temp = TEN() + ONE() + UNDER();
+    temp = temp.toFixed(2);
+    return temp; // 10의자리
   }
   return 100; // 100
 };
+let value = 0;
+let temp;
+let game = 0;
 
-console.log(graph(digit()));
+setInterval(() => {
+  // console.log(`변하는 그래프 ${value}`);
+  value = graph(digit());
+  temp = value;
+  temp *= 1000;
+  temp = temp.toFixed();
+  temp *= 1;
+}, 3000);
+
+const dobak = () => {
+  if (game === 0) {
+    console.log(`그래프 게임 시작: ${value}`);
+    game = 1;
+    setTimeout(() => {
+      dobak();
+    }, temp);
+  } else if (game === 1) {
+    console.log('그래프 게임 종료');
+    game = 2;
+    setTimeout(() => {
+      dobak();
+    }, 1000);
+  } else if (game === 2) {
+    console.log('쉬는 시간');
+    game = 0;
+    setTimeout(() => {
+      dobak();
+    }, 1500);
+  }
+};
+
+dobak();

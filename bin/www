@@ -124,7 +124,43 @@ const graph = (num) => { // 그래프 함수
   }
   return 100; // 100
 };
-graph(digit());
+let value = 0;
+let temp;
+let game = 0;
+
+setInterval(() => {
+  // console.log(`변하는 그래프 ${value}`);
+  value = graph(digit());
+  value = value.toFixed(2);
+  value *= 1;
+  temp = value;
+  temp *= 1000;
+  temp = temp.toFixed();
+  temp *= 1;
+}, 3000);
+
+const dobak = () => {
+  if (game === 0) {
+    console.log(`그래프 게임 시작: ${value}`);
+    game = 1;
+    setTimeout(() => {
+      dobak();
+    }, temp);
+  } else if (game === 1) {
+    console.log('그래프 게임 종료');
+    game = 2;
+    setTimeout(() => {
+      dobak();
+    }, 1000);
+  } else if (game === 2) {
+    console.log('쉬는 시간');
+    game = 0;
+    setTimeout(() => {
+      dobak();
+    }, 1500);
+  }
+};
+dobak();
 // 게임
 
 

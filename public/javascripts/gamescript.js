@@ -94,4 +94,8 @@ $('document').ready(() => {
   /*
       게임과 관련된 버튼
   */
+  socket.on('dobak', (data) => {
+    $('.ear').append(`<div>${data.name}</div>`);
+    $('.ear').scrollTop($('.ear')[0].scrollHeight);
+  });
 });
