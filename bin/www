@@ -253,7 +253,7 @@ io.on('connection', (socket) => {
           money *= 1;
           io.to(socket.id).emit('Report', { // 베팅 성공
             dollar: money,
-            spent: bettingmoney * cashout,
+            spent: bettingmoney,
             bet: 'Success',
             end: value,
             mybetting: cashout,
