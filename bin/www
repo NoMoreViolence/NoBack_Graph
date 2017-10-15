@@ -169,6 +169,7 @@ io.on('connection', (socket) => {
   let cashout = 0; // 캐쉬
   let betted = false; // 베팅여부
 
+
   socket.on('NameCheck', (data) => { // 이름 체크
     // 게임 회원 등록
     if (data.name === '' || check === true) {
@@ -195,6 +196,7 @@ io.on('connection', (socket) => {
       .emit('NameCheck', { data: true, name: username, cash: money }); // true 보냄
   });
 
+
   socket.on('SendMessage', (data) => { // 메시지
     if (check === false) {
       // 인가된 사용자가 아님
@@ -207,29 +209,70 @@ io.on('connection', (socket) => {
     io.emit('ResMessage', { msg: data.message, name: username });
   });
 
+
   socket.on('Betting', (data) => { // 베팅
-    if (check !== false && game === 0) { // 인가된 사용자 체크 + 베팅 시간 중 베팅
-      bettingmoney = data.money;
-      bettingmoney *= 1;
-      cashout = data.out;
-      cashout *= 1;
-      if ( // 베팅한 금액과 캐쉬 아웃 금액 숫자 체크 - 1000원 이상 및 이상한 글자 입력 방지
-        bettingmoney < 1000 &&
-        typeof bettingmoney === 'number' &&
-        Number.isNaN(bettingmoney) === false &&
-        typeof cashout === 'number' &&
-        Number.isNaN(cashout) === false
-      ) {
-        money -= bettingmoney;
-        betted = true;
-        socket.emit('Betting', { return: true, dollar: money, bet: bettingmoney });
+    if (betted === false) { // 정상적인 베팅
+      if (check !== false && game === 0) { // 인가된 사용자 체크 + 베팅 시간 중 베팅
+        bettingmoney = data.money;
+        bettingmoney *= 1;
+        cashout = data.out;
+        cashout *= 1;
+        if ( // 베팅한 금액과 캐쉬 아웃 금액 숫자 체크 - 1000원 이상 및 이상한 글자, 원래 돈보다 많은 돈 입력 방지
+          bettingmoney < 1000 &&
+          money > bettingmoney &&
+          typeof bettingmoney === 'number' &&
+          Number.isNaN(bettingmoney) === false &&
+          typeof cashout === 'number' &&
+          Number.isNaN(cashout) === false
+        ) {
+          money -= bettingmoney;
+          betted = true;
+          socket.emit('Betting', { return: true, dollar: money, bet: bettingmoney });
+          return;
+        }
+        socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
         return;
       }
       socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
-      return;
+    } else if (betted === true) { // 정상적인 베팅이 아님, 전 게임에서 베팅을 하고 배당을 받지 않았음
+      if (value < cashout) { // 베팅실패
+        bettingmoney = 0;
+        cashout = 0;
+      } else { // 베팅성공
+        money += bettingmoney * cashout;
+        money = money.toFixed();
+        money *= 1;
+        bettingmoney = 0;
+        cashout = 0;
+      }
+
+      if (check !== false && game === 0) { // 인가된 사용자 체크 + 베팅 시간 중 베팅
+        bettingmoney = data.money;
+        bettingmoney *= 1;
+        cashout = data.out;
+        cashout *= 1;
+        if ( // 베팅한 금액과 캐쉬 아웃 금액 숫자 체크 - 1000원 이상 및 이상한 글자, 원래 돈보다 많은 돈 입력 방지
+          bettingmoney < 1000 &&
+          money > bettingmoney &&
+          typeof bettingmoney === 'number' &&
+          Number.isNaN(bettingmoney) === false &&
+          typeof cashout === 'number' &&
+          Number.isNaN(cashout) === false
+        ) {
+          money -= bettingmoney;
+          betted = true;
+          socket.emit('Betting', { return: true, dollar: money, bet: bettingmoney });
+          return;
+        }
+        socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
+        return;
+      }
+      socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
     }
-    socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
+    socket.emit('Report', { bet: 0, dollar: money });
   });
+
+
   socket.on('GameStart', (data) => { // 게임시작
     if (betted === true) { // 베팅한 사용자일 때
       if (value < cashout) { // 베팅실패
@@ -249,6 +292,7 @@ io.on('connection', (socket) => {
     socket.emit('Report', { bet: 0, dollar: money });
   });
 
+
   // 연결 종료
   socket.on('disconnect', () => {
     console.log(`User Disconnected: ${username}`);
@@ -262,7 +306,7 @@ io.on('connection', (socket) => {
     }
   });
 });
-dobak();
+dobak(); // 게임 가동
 // 서버 가동
 server.listen(port, () => {
   console.log('http://localhost:3000');
