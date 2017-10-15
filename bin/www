@@ -184,7 +184,7 @@ io.on('connection', (socket) => {
     username = data.name; // 이름
     names.push(username); // 올바른 이름 등록: 이름 배열에 넣음
     check = true; // 이름 부여 완료
-    money = 100000; // 처음 돈 십만원
+    money = 10000; // 처음 돈 만원
     console.log(`Name Check Success ${username}`);
     io.to(socket.id).emit('NameCheck', { data: true, name: username, cash: money }); // true 보냄
   });

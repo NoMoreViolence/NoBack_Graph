@@ -166,6 +166,9 @@ body {
   text-align: center;
   font: 60px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+.game .top .graph .number {
+  margin: 2%;
+}
 .game .top .people {
   width: calc(40% - 2%);
   height: 240px;
