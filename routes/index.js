@@ -42,7 +42,7 @@ router.get('/donation', (req, res) => {
   });
 });
 // 세팅
-router.get('/setting', (req, res) => {
+router.get('/more', (req, res) => {
   res.render('index', {
     game: false,
     rank: false,

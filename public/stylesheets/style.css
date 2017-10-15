@@ -164,6 +164,7 @@ body {
   margin: 1%;
   border: 1px solid black;
   text-align: center;
+  font: 60px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 .game .top .people {
   width: calc(40% - 2%);
@@ -303,17 +304,24 @@ body {
 }
 .game .bottom .record .recordboard {
   width: calc(100% - 2%);
-  height: 184px;
+  height: 140px;
   margin: auto;
   padding: 1%;
   overflow: auto;
 }
 .game .bottom .record .recordboard .record-unit {
+  display: flex;
+}
+.game .bottom .record .record-unit {
+  width: calc(100% - 2%);
   margin: 1%;
   display: flex;
 }
 .game .bottom .record .recordboard .record-unit .record-unit-son {
-  width: 30%
+  width: 30%;
+}
+.game .bottom .record .record-unit .record-unit-son {
+  width: 30%;
 }
 
 /* 베팅 */

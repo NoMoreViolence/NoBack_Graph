@@ -130,7 +130,7 @@ let game = 0; // 게임 시작, 끝, 대기 판단
 const io = require('socket.io')(server);
 // 소켓 io server 가동
 
-// 도박
+// 도박 게임 반복
 const dobak = () => {
   if (game === 0) {
     value = graph(digit());
@@ -186,15 +186,12 @@ io.on('connection', (socket) => {
     check = true; // 이름 부여 완료
     money = 100000; // 처음 돈 십만원
     console.log(`Name Check Success ${username}`);
-    io
-      .to(socket.id)
-      .emit('NameCheck', { data: true, name: username, cash: money }); // true 보냄
+    io.to(socket.id).emit('NameCheck', { data: true, name: username, cash: money }); // true 보냄
   });
 
 
   socket.on('SendMessage', (data) => { // 메시지
-    if (check === false) {
-      // 인가된 사용자가 아님
+    if (check === false) { // 인가된 사용자가 아님
       console.log('Wrong Connection');
       console.log(`None Name User: Chatting access denied ${socket.id}`);
       io.to(socket.id).emit('Err');
@@ -206,87 +203,77 @@ io.on('connection', (socket) => {
 
 
   socket.on('Betting', (data) => { // 베팅
-    if (betted === false) { // 정상적인 베팅
-      if (check !== false && game === 0) { // 인가된 사용자 체크 + 베팅 시간 중 베팅
-        bettingmoney = data.money;
-        bettingmoney *= 1;
-        cashout = data.out;
-        cashout *= 1;
-        if ( // 베팅한 금액과 캐쉬 아웃 금액 숫자 체크 - 1000원 이상 및 이상한 글자, 원래 돈보다 많은 돈 입력 방지
-          bettingmoney > 1000 &&
-          money > bettingmoney &&
-          typeof bettingmoney === 'number' &&
-          Number.isNaN(bettingmoney) === false &&
-          typeof cashout === 'number' &&
-          Number.isNaN(cashout) === false
-        ) {
-          money -= bettingmoney;
-          betted = true;
-          socket.emit('Betting', { return: true, dollar: money, bet: bettingmoney });
+    if (check !== false) { // 인가된 사용자
+      if (betted === false) { // 정상적인 베팅
+        if (check !== false && game === 0) { // 인가된 사용자 체크 + 베팅 시간 중 베팅
+          bettingmoney = data.money;
+          bettingmoney *= 1;
+          cashout = data.out;
+          cashout *= 1;
+          if ( // 베팅한 금액과 캐쉬 아웃 금액 숫자 체크 - 1000원 이상 및 이상한 글자, 원래 돈보다 많은 돈 입력 방지
+            bettingmoney >= 1000 &&
+            money >= bettingmoney &&
+            typeof bettingmoney === 'number' &&
+            Number.isNaN(bettingmoney) === false &&
+            typeof cashout === 'number' &&
+            Number.isNaN(cashout) === false
+          ) {
+            money -= bettingmoney;
+            betted = true;
+            io.to(socket.id).emit('Betting', { return: true, dollar: money, bet: bettingmoney });
+            return;
+          }
+          io.to(socket.id).emit('Betting', { return: false, dollar: money, bet: bettingmoney });
           return;
         }
-        socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
-        return;
+        io.to(socket.id).emit('Betting', { return: false, dollar: money, bet: bettingmoney });
       }
-      socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
-    } else if (betted === true) { // 정상적인 베팅이 아님, 전 게임에서 베팅을 하고 배당을 받지 않았음
-      if (value < cashout) { // 베팅실패
-        bettingmoney = 0;
-        cashout = 0;
-      } else { // 베팅성공
-        money += bettingmoney * cashout;
-        money = money.toFixed();
-        money *= 1;
-        bettingmoney = 0;
-        cashout = 0;
-      }
-
-      if (check !== false && game === 0) { // 인가된 사용자 체크 + 베팅 시간 중 베팅
-        bettingmoney = data.money;
-        bettingmoney *= 1;
-        cashout = data.out;
-        cashout *= 1;
-        if ( // 베팅한 금액과 캐쉬 아웃 금액 숫자 체크 - 1000원 이상 및 이상한 글자, 원래 돈보다 많은 돈 입력 방지
-          bettingmoney < 1000 &&
-          money > bettingmoney &&
-          typeof bettingmoney === 'number' &&
-          Number.isNaN(bettingmoney) === false &&
-          typeof cashout === 'number' &&
-          Number.isNaN(cashout) === false
-        ) {
-          money -= bettingmoney;
-          betted = true;
-          socket.emit('Betting', { return: true, dollar: money, bet: bettingmoney });
-          return;
-        }
-        socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
-        return;
-      }
-      socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
     }
   });
 
 
   socket.on('Game', () => { // 게임시작
-    if (betted === true) { // 베팅한 사용자일 때
-      if (value < cashout) { // 베팅실패
-        bettingmoney = 0;
-        cashout = 0;
-        socket.emit('Report', { dollar: money, spent: bettingmoney, end: value });
-        betted = false;
-      } else { // 베팅성공
-        money += bettingmoney * cashout;
-        money += bettingmoney;
-        money = money.toFixed();
-        money *= 1;
-        socket.emit('Report', { dollar: money, spent: bettingmoney * cashout, end: value });
-        bettingmoney = 0;
-        cashout = 0;
-        betted = false;
+    if (check !== false) { // 인가된 사용자
+      if (betted === true) { // 베팅한 사용자일 때
+        if (value < cashout) { // 베팅실패
+          io.to(socket.id).emit('Report', { // 베팅 실패
+            dollar: money,
+            spent: bettingmoney,
+            bet: 'Fail',
+            end: value,
+            mybetting: cashout,
+          });
+          bettingmoney = 0;
+          cashout = 0;
+          betted = false;
+        } else { // 베팅성공
+          money += bettingmoney * cashout;
+          money += bettingmoney;
+          money = money.toFixed();
+          money *= 1;
+          io.to(socket.id).emit('Report', { // 베팅 성공
+            dollar: money,
+            spent: bettingmoney * cashout,
+            bet: 'Success',
+            end: value,
+            mybetting: cashout,
+          });
+          bettingmoney = 0;
+          cashout = 0;
+          betted = false;
+        }
+        return;
       }
-      return;
+      bettingmoney = 0; // 값 지우기
+      cashout = 0; // 값 지우기
+      io.to(socket.id).emit('Report', { // 베팅 안한 사용자
+        dollar: money,
+        spent: 0,
+        bet: 'Not Betted',
+        end: value,
+        mybetting: 0,
+      });
     }
-    socket.emit('Report', { dollar: money, spent: 'Not Betted', end: value }); // 베팅 안한 사용자
   });
 
 
