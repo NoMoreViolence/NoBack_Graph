@@ -3,9 +3,7 @@ $('document').ready(() => {
   const socket = io();
   let username = null;
 
-  /*
-      이름 입력
-  */
+
   // 이름 입력 버튼
   $('.btn_io').on('click', () => {
     const name = $('.name_io');
@@ -41,14 +39,8 @@ $('document').ready(() => {
     }
     alert('Already Someone Chosen Your name, Choice another.');
   });
-  /*
-      이름 입력
-  */
 
 
-  /*
-      게임과 관련된 버튼
-  */
   // 게임 기록 버튼 and 게임 채팅 버튼
   $('#btn1').on('click', () => {
     $('.record').css('display', 'block');
@@ -92,19 +84,75 @@ $('document').ready(() => {
     $('.ear').scrollTop($('.ear')[0].scrollHeight);
   });
 
-  /*
-      도박 게임과 관련된 Jquery & socket
-  */
-  socket.on('GameStart', (data) => {
-    $('.ear').append(`<div>${data.data}</div>`);
-    $('.ear').scrollTop($('.ear')[0].scrollHeight);
+
+  // 도박 게임 상황
+  socket.on('Game', (data) => {
+    $('.graph').empty();
+    $('.graph').append(`<div>${data.data}</div>`);
+    socket.emit('Game');
   });
-  socket.on('GameSet', (data) => {
-    $('.ear').append(`<div>${data.data}</div>`);
-    $('.ear').scrollTop($('.ear')[0].scrollHeight);
-  });
+  // $('.graph').css('background-color', 'rgb(230, 90, 90)');
   socket.on('Delay', (data) => {
-    $('.ear').append(`<div>${data.data}</div>`);
-    $('.ear').scrollTop($('.ear')[0].scrollHeight);
+    $('.graph').empty();
+    $('.graph').css('background-color', 'rgba(0, 187, 255, 0.25)');
+    $('.graph').append(`<div>${data.data}</div>`);
+  });
+  // 게임 결과 보고
+  socket.on('Report', (data) => {
+    if (typeof data.spent === 'string' || data.spent === 0) {
+      $('.graph').css('background-color', 'rgb(230, 90, 90)');
+      $('.money').empty();
+      $('.money').append(`${data.dollar}`);
+      $('.recordboard').append(`
+        <div class="record-unit">
+          <div class="record-unit-son">${data.end}</div>
+          <div class="record-unit-son">${data.spent}</div>
+          <div class="record-unit-son">${data.dollar}</div>
+        </div>
+      `);
+      $('.recordboard').scrollTop($('.recordboard')[0].scrollHeight);
+    } else {
+      $('.graph').css('background-color', 'rgb(168, 219, 58)');
+      $('.money').empty();
+      $('.money').append(`${data.dollar}`);
+      $('.recordboard').append(`
+        <div class="record-unit">
+          <div class="record-unit-son">${data.end}</div>
+          <div class="record-unit-son">${data.spent}</div>
+          <div class="record-unit-son">${data.dollar}</div>
+        </div>
+      `);
+      $('.recordboard').scrollTop($('.recordboard')[0].scrollHeight);
+    }
+  });
+
+
+  // 베팅 버튼
+  $('.bet-btn').on('click', () => {
+    let bettingmoney = $('.bet-money').val();
+    bettingmoney *= 1;
+    let cashout = $('.bet-cashout').val();
+    cashout *= 1;
+    let money = $('.money').text();
+    money *= 1;
+
+    if (
+      bettingmoney > 1000 &&
+      money > bettingmoney &&
+      typeof bettingmoney === 'number' &&
+      Number.isNaN(bettingmoney) === false &&
+      typeof cashout === 'number' &&
+      Number.isNaN(cashout) === false
+    ) {
+      socket.emit('Betting', { money: bettingmoney, out: cashout });
+      return;
+    }
+    alert('Not right input value!, Check input value or your money');
+  });
+
+  // 베팅 후
+  socket.on('Betting', (data) => {
+    $('.money').empty();
+    $('.money').append(`${data.dollar}`);
   });
 });

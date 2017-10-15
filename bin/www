@@ -137,19 +137,14 @@ const dobak = () => {
     value = value.toFixed(2);
     value *= 1;
     console.log(`게임 시작: ${value}`);
-    io.emit('GameStart', { data: value });
+    io.emit('Game', { data: value });
     game = 1;
-    dobak();
-  } else if (game === 1) {
-    console.log('게임 끝');
-    io.emit('GameSet', { data: 'Set' });
-    game = 2;
     setTimeout(() => {
       dobak();
     }, 5000);
-  } else if (game === 2) {
-    console.log('베팅 준비');
-    io.emit('Delay', { data: 'Fuck you' });
+  } else if (game === 1) {
+    console.log('베팅 시간');
+    io.emit('Delay', { data: 'Betting Time' });
     game = 0;
     setTimeout(() => {
       dobak();
@@ -218,7 +213,7 @@ io.on('connection', (socket) => {
         cashout = data.out;
         cashout *= 1;
         if ( // 베팅한 금액과 캐쉬 아웃 금액 숫자 체크 - 1000원 이상 및 이상한 글자, 원래 돈보다 많은 돈 입력 방지
-          bettingmoney < 1000 &&
+          bettingmoney > 1000 &&
           money > bettingmoney &&
           typeof bettingmoney === 'number' &&
           Number.isNaN(bettingmoney) === false &&
@@ -269,27 +264,29 @@ io.on('connection', (socket) => {
       }
       socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
     }
-    socket.emit('Report', { bet: 0, dollar: money });
   });
 
 
-  socket.on('GameStart', (data) => { // 게임시작
+  socket.on('Game', () => { // 게임시작
     if (betted === true) { // 베팅한 사용자일 때
       if (value < cashout) { // 베팅실패
         bettingmoney = 0;
         cashout = 0;
-        socket.emit('Report', { bet: false, dollar: money });
+        socket.emit('Report', { dollar: money, spent: bettingmoney, end: value });
+        betted = false;
       } else { // 베팅성공
         money += bettingmoney * cashout;
+        money += bettingmoney;
         money = money.toFixed();
         money *= 1;
+        socket.emit('Report', { dollar: money, spent: bettingmoney * cashout, end: value });
         bettingmoney = 0;
         cashout = 0;
-        socket.emit('Report', { bet: true, dollar: money });
+        betted = false;
       }
       return;
     }
-    socket.emit('Report', { bet: 0, dollar: money });
+    socket.emit('Report', { dollar: money, spent: 'Not Betted', end: value }); // 베팅 안한 사용자
   });
 
 

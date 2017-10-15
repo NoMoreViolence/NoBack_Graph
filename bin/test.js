@@ -106,3 +106,8 @@ const a = undefined;
 console.log(typeof a);
 console.log(Number.isNaN(a));
 console.log(a);
+
+
+let b = 1;
+b = b.toFixed(2);
+console.log(b);
