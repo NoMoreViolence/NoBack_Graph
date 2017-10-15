@@ -7,6 +7,17 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+/* placeholder */
+
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: black;
+}
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: black;
+}
+
 /* 최종 컨테이너 */
 
 .container {
@@ -288,15 +299,67 @@ body {
   background-color: rgba(255, 255, 255, 0.54);
   display: none;
 }
-.game .bottom .bet {
+
+/* 베팅 */
+
+.game .bottom .right-down {
   width: calc(40% - 2%);
   height: 230px;
   margin: 1%;
   border: 1px solid black;
+  text-align: center;
+}
+.game .bottom .right-down input {
+  width: 50%;
+  height: 25px;
+  margin-top: 0%;
+  margin-bottom: 2%;
+  margin-right: 0%;
+  margin-left: 0%;
+  border: 1px solid rgba(255, 255, 255, 0.54);
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.54);
+  outline: none;
+}
+.game .bottom .right-down button {
+  width: 50%;
+  height: 25px;
+  margin-top: 2%;
+  margin-bottom: 0%;
+  margin-right: 0%;
+  margin-left: 0%;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  color: rebeccapurple;
+  background-color: rgba(255, 255, 255, 0.54);
+}
+.game .bottom .right-down button:hover {
+  background-color: rgba(255, 255, 255, 0.91);
+  color: rgba(0, 154, 201, 0.6);
+  border-color: rgba(0, 154, 201, 0.6);
+}
+.game .bottom .right-down button:focus {
+  outline: none;
+}
+.game .bottom .right-down button:active {
+  color: rebeccapurple;
+  background-color: rgba(0, 154, 201, 0.6);
 }
 
 /* 도네이션 */
 
+::-webkit-scrollbar-track {
+  border: 1px solid black;
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #000000;
+}
 .middle .donation {
   margin: auto;
 }

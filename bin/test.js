@@ -1,3 +1,4 @@
+/*
 const digit = () => { // 자릿수 함수
   let zero = Math.floor(Math.random() * 100); // 100분의 1 확률로 그래프는 0이 된다
   zero = Number(zero);
@@ -99,3 +100,9 @@ const dobak = () => {
 };
 
 dobak();
+*/
+
+const a = undefined;
+console.log(typeof a);
+console.log(Number.isNaN(a));
+console.log(a);

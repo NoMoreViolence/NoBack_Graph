@@ -1,10 +1,11 @@
 // 모듈
-const express = require('express');
-const path = require('path');
-const logger = require('morgan');
-const favicon = require('serve-favicon');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const express = require('express');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const path = require('path');
+
 // express
 const app = express();
 

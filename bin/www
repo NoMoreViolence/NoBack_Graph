@@ -25,16 +25,13 @@ const port = normalizePort(process.env.PORT || '3000');
 // 포트 설정
 app.set('port', port);
 
-
 // Error 의 이벤트 리스너
 const OH_ERROR = (error) => {
   if (error.syscall !== 'listen') {
     throw error;
   }
 
-  const bind = typeof port === 'string' ?
-    `Pipe ${port}` :
-    `Port ${port}`;
+  const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
 
   // 친숙한 메시지로 특정 청취 오류를 처리합니다.
   switch (error.code) {
@@ -55,16 +52,13 @@ const OH_ERROR = (error) => {
 // listening 의 이벤트 리스너
 const listening = () => {
   const addr = server.address();
-  const bind = typeof addr === 'string' ?
-    `pipe ${addr}` :
-    `port ${addr.port}`;
+  const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
 };
 
-
 // 게임
-let started = false; // 게임 시작 상태 아님
-const digit = () => { // 자릿수 함수
+const digit = () => {
+  // 자릿수 함수
   let zero = Math.floor(Math.random() * 100); // 100분의 1 확률로 그래프는 0이 된다
   zero = Number(zero);
   if (zero === 0) {
@@ -87,7 +81,8 @@ const digit = () => { // 자릿수 함수
 
   return 1; // 그래프 1의자리
 };
-const ONE = () => { // 일의자리 함수
+const ONE = () => {
+  // 일의자리 함수
   let temp = Math.floor(Math.random() * 10);
 
   if (temp === 0 || temp === 1 || temp === 2) {
@@ -96,7 +91,8 @@ const ONE = () => { // 일의자리 함수
   temp = Math.floor(Math.random() * 10);
   return temp;
 };
-const TEN = () => { // 십의자리 함수
+const TEN = () => {
+  // 십의자리 함수
   let temp = Math.floor(Math.random() * 9) + 1;
 
   if (temp === 1 || temp === 2 || temp === 3 || temp === 4) {
@@ -105,8 +101,9 @@ const TEN = () => { // 십의자리 함수
   temp = Math.floor(Math.random() * 9) + 1;
   return temp * 10;
 };
-const UNDER = () => { // 소수점
-  let temp = (Math.random() * 1);
+const UNDER = () => {
+  // 소수점
+  let temp = Math.random() * 1;
   temp = temp.toFixed(2);
   temp *= 1;
   if (temp === 0) {
@@ -114,7 +111,8 @@ const UNDER = () => { // 소수점
   }
   return temp;
 };
-const graph = (num) => { // 그래프 함수
+const graph = (num) => {
+  // 그래프 함수
   if (num === 0) {
     return 0; // 0
   } else if (num === 1) {
@@ -124,63 +122,64 @@ const graph = (num) => { // 그래프 함수
   }
   return 100; // 100
 };
-let value = 0;
-let temp;
-let game = 0;
-
-setInterval(() => {
-  // console.log(`변하는 그래프 ${value}`);
-  value = graph(digit());
-  value = value.toFixed(2);
-  value *= 1;
-  temp = value;
-  temp *= 1000;
-  temp = temp.toFixed();
-  temp *= 1;
-}, 3000);
-
-const dobak = () => {
-  if (game === 0) {
-    console.log(`그래프 게임 시작: ${value}`);
-    game = 1;
-    setTimeout(() => {
-      dobak();
-    }, temp);
-  } else if (game === 1) {
-    console.log('그래프 게임 종료');
-    game = 2;
-    setTimeout(() => {
-      dobak();
-    }, 1000);
-  } else if (game === 2) {
-    console.log('쉬는 시간');
-    game = 0;
-    setTimeout(() => {
-      dobak();
-    }, 1500);
-  }
-};
-dobak();
+let value = 0; // 그래프 값
+let game = 0; // 게임 시작, 끝, 대기 판단
 // 게임
-
 
 // 소켓 io server 가동
 const io = require('socket.io')(server);
+// 소켓 io server 가동
 
+// 도박
+const dobak = () => {
+  if (game === 0) {
+    value = graph(digit());
+    value = value.toFixed(2);
+    value *= 1;
+    console.log(`게임 시작: ${value}`);
+    io.emit('GameStart', { data: value });
+    game = 1;
+    dobak();
+  } else if (game === 1) {
+    console.log('게임 끝');
+    io.emit('GameSet', { data: 'Set' });
+    game = 2;
+    setTimeout(() => {
+      dobak();
+    }, 5000);
+  } else if (game === 2) {
+    console.log('베팅 준비');
+    io.emit('Delay', { data: 'Fuck you' });
+    game = 0;
+    setTimeout(() => {
+      dobak();
+    }, 10000);
+  }
+};
+// 도박
+
+// 소켓
 const names = [];
 io.on('connection', (socket) => {
   console.log('New Gamer Connected');
   let check = false; // 중복 이름 체크 방지 변수
   let username = null; // 이름
   let money = 0; // 돈
+  let bettingmoney = 0; // 베팅한 돈
+  let cashout = 0; // 캐쉬
+  let betted = false; // 베팅여부
 
-  socket.on('NameCheck', (data) => { // 게임 회원 등록
-    if (data.name === '' || check === true) { // 이름 null 체크, 부여된 이름 변경 방지
+  socket.on('NameCheck', (data) => { // 이름 체크
+    // 게임 회원 등록
+    if (data.name === '' || check === true) {
+      // 이름 null 체크, 부여된 이름 변경 방지
       io.to(socket.id).emit('NameCheck', { data: false, name: null }); // true 보냄
       return;
     }
-    for (let index = 0; index < names.length; index += 1) { // 중복체크 for 문
-      if (names[index] === data.name) { // 배열의 이름 데이터와 비교
+    for (let index = 0; index < names.length; index += 1) {
+      // 중복체크 for 문
+      if (names[index] === data.name) {
+        // 배열의 이름 데이터와 비교
         io.to(socket.id).emit('NameCheck', { data: false, name: null }); // false를 보냄
         return;
       }
@@ -191,13 +190,14 @@ io.on('connection', (socket) => {
     check = true; // 이름 부여 완료
     money = 100000; // 처음 돈 십만원
     console.log(`Name Check Success ${username}`);
-    io.to(socket.id).emit('NameCheck', { data: true, name: username, cash: money }); // true 보냄
+    io
+      .to(socket.id)
+      .emit('NameCheck', { data: true, name: username, cash: money }); // true 보냄
   });
 
-
-  // 메시지
-  socket.on('SendMessage', (data) => {
-    if (check === false) { // 인가된 사용자가 아님
+  socket.on('SendMessage', (data) => { // 메시지
+    if (check === false) {
+      // 인가된 사용자가 아님
       console.log('Wrong Connection');
       console.log(`None Name User: Chatting access denied ${socket.id}`);
       io.to(socket.id).emit('Err');
@@ -207,18 +207,62 @@ io.on('connection', (socket) => {
     io.emit('ResMessage', { msg: data.message, name: username });
   });
 
+  socket.on('Betting', (data) => { // 베팅
+    if (check !== false && game === 0) { // 인가된 사용자 체크 + 베팅 시간 중 베팅
+      bettingmoney = data.money;
+      bettingmoney *= 1;
+      cashout = data.out;
+      cashout *= 1;
+      if ( // 베팅한 금액과 캐쉬 아웃 금액 숫자 체크 - 1000원 이상 및 이상한 글자 입력 방지
+        bettingmoney < 1000 &&
+        typeof bettingmoney === 'number' &&
+        Number.isNaN(bettingmoney) === false &&
+        typeof cashout === 'number' &&
+        Number.isNaN(cashout) === false
+      ) {
+        money -= bettingmoney;
+        betted = true;
+        socket.emit('Betting', { return: true, dollar: money, bet: bettingmoney });
+        return;
+      }
+      socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
+      return;
+    }
+    socket.emit('Betting', { return: false, dollar: money, bet: bettingmoney });
+  });
+  socket.on('GameStart', (data) => { // 게임시작
+    if (betted === true) { // 베팅한 사용자일 때
+      if (value < cashout) { // 베팅실패
+        bettingmoney = 0;
+        cashout = 0;
+        socket.emit('Report', { bet: false, dollar: money });
+      } else { // 베팅성공
+        money += bettingmoney * cashout;
+        money = money.toFixed();
+        money *= 1;
+        bettingmoney = 0;
+        cashout = 0;
+        socket.emit('Report', { bet: true, dollar: money });
+      }
+      return;
+    }
+    socket.emit('Report', { bet: 0, dollar: money });
+  });
+
   // 연결 종료
   socket.on('disconnect', () => {
     console.log(`User Disconnected: ${username}`);
-    for (let index = 0; index < names.length; index += 1) { // 중복체크 for 문
-      if (names[index] === username) { // 배열의 이름 데이터와 비교
+    for (let index = 0; index < names.length; index += 1) {
+      // 중복체크 for 문
+      if (names[index] === username) {
+        // 배열의 이름 데이터와 비교
         names.splice(index, 1);
         return;
       }
     }
   });
 });
-
+dobak();
 // 서버 가동
 server.listen(port, () => {
   console.log('http://localhost:3000');

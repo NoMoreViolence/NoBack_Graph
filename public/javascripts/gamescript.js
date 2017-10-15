@@ -91,11 +91,20 @@ $('document').ready(() => {
     $('.ear').append(`<div>${data.name}: ${data.msg}</div>`);
     $('.ear').scrollTop($('.ear')[0].scrollHeight);
   });
+
   /*
-      게임과 관련된 버튼
+      도박 게임과 관련된 Jquery & socket
   */
-  socket.on('dobak', (data) => {
-    $('.ear').append(`<div>${data.name}</div>`);
+  socket.on('GameStart', (data) => {
+    $('.ear').append(`<div>${data.data}</div>`);
+    $('.ear').scrollTop($('.ear')[0].scrollHeight);
+  });
+  socket.on('GameSet', (data) => {
+    $('.ear').append(`<div>${data.data}</div>`);
+    $('.ear').scrollTop($('.ear')[0].scrollHeight);
+  });
+  socket.on('Delay', (data) => {
+    $('.ear').append(`<div>${data.data}</div>`);
     $('.ear').scrollTop($('.ear')[0].scrollHeight);
   });
 });

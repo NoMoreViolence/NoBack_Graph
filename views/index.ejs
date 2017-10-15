@@ -7,8 +7,8 @@
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src='/javascripts/gamescript.js'></script>
-        <% } %>
-            <link rel='stylesheet' href='/stylesheets/style.css' />
+    <% } %>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
 <body>
@@ -69,7 +69,7 @@
 
                                 </div>
                                 <div class="mouth">
-                                    <input type="text" class="tongue" placehoder="Input Your Message">
+                                    <input type="text" class="tongue">
                                     <input type="submit" class="sound" value="Send">
                                 </div>
                             </div>
@@ -79,8 +79,20 @@
                             </div>
                         </div>
                         <!-- 베팅 -->
-                        <div class="bet">
-
+                        <div class="right-down">
+                            <div>
+                                <div>
+                                    <p>Betting Amount - Minimum 1000</p>
+                                    <input type="text">    
+                                </div>
+                                <div>
+                                    <p>Cash-Out Point</p>
+                                    <input type="text">    
+                                </div>
+                                <div>
+                                    <button type="button" class="bet-btn">Betting</button>    
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <% } %>
