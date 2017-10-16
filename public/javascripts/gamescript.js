@@ -40,6 +40,22 @@ $('document').ready(() => {
     alert('Already Someone Chosen Your name, Choice another.');
   });
 
+  // 이름 입력 후 실시간 사용자 넣기
+  socket.on('live', (data) => {
+    $('.wholeboard').empty();
+    for (let index = 0; index < data.name.length; index += 1) {
+      $('.wholeboard').append(`
+      <div class="${data.name[index]}">
+        ${data.name[index]}
+      </div>`);
+    }
+  });
+
+  // 이름 입력 후 실시간 사용자 넣기
+  socket.on('dead', (data) => {
+    $(`.${data.name}`).remove();
+  });
+
   // 베팅한 사람들 버튼 and 모든 사람 버튼
   $('#select-1-btn1').on('click', () => {
     $('.bet-people').css('display', 'block');
