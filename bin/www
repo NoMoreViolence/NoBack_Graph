@@ -220,13 +220,14 @@ io.on('connection', (socket) => {
           ) {
             money -= bettingmoney;
             betted = true;
-            io.to(socket.id).emit('Betting', { return: true, dollar: money, bet: bettingmoney });
+            io.to(socket.id).emit('Betting', { return: true, dollar: money }); // 베팅성공
+            io.emit('BET', { name: username });
             return;
           }
-          io.to(socket.id).emit('Betting', { return: false, dollar: money, bet: bettingmoney });
+          io.to(socket.id).emit('Betting', { return: false, dollar: money }); // 베팅실패
           return;
         }
-        io.to(socket.id).emit('Betting', { return: false, dollar: money, bet: bettingmoney });
+        io.to(socket.id).emit('Betting', { return: false, dollar: money }); // 베팅실패
       }
     }
   });
@@ -243,6 +244,13 @@ io.on('connection', (socket) => {
             end: value,
             mybetting: cashout,
           });
+          io.emit('Board-Report', { // 실시간 기록 보내기
+            name: username,
+            betmoney: bettingmoney,
+            grade: 'Fail',
+            mybetting: cashout,
+            spent: `-${bettingmoney}`,
+          });
           bettingmoney = 0;
           cashout = 0;
           betted = false;
@@ -257,6 +265,13 @@ io.on('connection', (socket) => {
             bet: 'Success',
             end: value,
             mybetting: cashout,
+          });
+          io.emit('Board-Report', { // 실시간 기록 보내기
+            name: username,
+            betmoney: bettingmoney,
+            grade: 'Success',
+            mybetting: cashout,
+            spent: `+${(bettingmoney * cashout) + bettingmoney}`,
           });
           bettingmoney = 0;
           cashout = 0;

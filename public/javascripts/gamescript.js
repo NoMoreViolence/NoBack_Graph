@@ -40,14 +40,22 @@ $('document').ready(() => {
     alert('Already Someone Chosen Your name, Choice another.');
   });
 
-
+  // 베팅한 사람들 버튼 and 모든 사람 버튼
+  $('#select-1-btn1').on('click', () => {
+    $('.bet-people').css('display', 'block');
+    $('.whole-people').css('display', 'none');
+  });
+  $('#select-1-btn2').on('click', () => {
+    $('.bet-people').css('display', 'none');
+    $('.whole-people').css('display', 'block');
+  });
   // 게임 기록 버튼 and 게임 채팅 버튼
-  $('#btn1').on('click', () => {
+  $('#select-2-btn1').on('click', () => {
     $('.record').css('display', 'block');
     $('.chat').css('display', 'none');
     $('.recordboard').scrollTop($('.recordboard')[0].scrollHeight);
   });
-  $('#btn2').on('click', () => {
+  $('#select-2-btn2').on('click', () => {
     $('.record').css('display', 'none');
     $('.chat').css('display', 'block');
     $('.ear').scrollTop($('.ear')[0].scrollHeight);
@@ -99,12 +107,14 @@ $('document').ready(() => {
 
   // 도박 게임 상황
   socket.on('Game', (data) => { // 게임 중
+    $('.betboard').empty(); // 베팅 보드 초기화
     $('.number').empty();
     $('.number').append(`<div>${data.data}</div>`);
     socket.emit('Game');
   });
 
   socket.on('Delay', (data) => { // 게임 대기 중
+    $('.betboard').empty(); // 베팅 보드 초기화
     $('.graph').css('background-color', 'rgba(0, 187, 255, 0.25)');
     $('.number').empty();
     $('.number').append(`<div>${data.data}</div>`);
@@ -137,6 +147,18 @@ $('document').ready(() => {
       </div>
     `);
     $('.recordboard').scrollTop($('.recordboard')[0].scrollHeight);
+  });
+
+  socket.on('Board-Report', (data) => { // 모든 사람들 결과 창
+    $('.betboard').append(`
+      <div class="PPID">
+        <div class="PID">${data.name}</div>
+        <div class="PID">${data.betmoney}</div>
+        <div class="PID">${data.grade}</div>
+        <div class="PID">${data.mybetting}</div>
+        <div class="PID">${data.spent}</div>
+      </div>
+    `);
   });
 
 
@@ -172,5 +194,16 @@ $('document').ready(() => {
     if (data.return === true) {
       $('.bet-btn').css('background-color', 'rgb(100, 100, 300)');
     }
+  });
+  socket.on('BET', (data) => {
+    $('.betboard').append(`
+    <div class="PPID">
+      <div class="PID">${data.name}</div>
+      <div class="PID">???</div>
+      <div class="PID">???</div>
+      <div class="PID">???</div>
+      <div class="PID">???</div>
+    </div>
+  `);
   });
 });
