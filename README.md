@@ -1,2 +1,6 @@
 # NoBack_Graph
-This is Graph Game
+
+-Graph Game-
+    -How to run-
+    cd bin
+    node www
