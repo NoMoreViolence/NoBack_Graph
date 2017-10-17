@@ -305,6 +305,7 @@ io.on('connection', (socket) => {
   });
 });
 dobak(); // 게임 가동
+
 // 서버 가동
 server.listen(port, () => {
   console.log('http://localhost:3000');
