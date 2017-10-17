@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Graph_Game</title>
+    <!-- CSS and Javascript -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src='/javascripts/gamescript.js'></script>
+    <link rel='stylesheet' href='/stylesheets/game.css' />
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="object">
+                <a href="/">Graph</a>
+            </div>
+            <div class="menu">
+                <ol>   
+                    <li><a href="/start">Game</a></li>
+                    <li><a href="/rank">Ranking</a></li>
+                    <li><a href="/donation">Donation</a></li>
+                    <li><a href="/more">More</a></li>
+                </ol>
+            </div>
+                <!-- 돈 -->
+                <div class="moneyboard">
+                    <div class="moneychar">
+                        Money: 
+                    </div>
+                    <div class="money">
+                    </div>
+                </div>
+            </div>
+        <div class="middle">
+                <!-- 이름 입력 부분 -->
+                <div class="namespace">
+                    <input type="text" class="name_io" name="username" placehoder="Input Your Name">
+                    <button type="submit" class="btn_io">Submit</button>
+                </div>
+                <!-- 게임 플레이 부분 -->
+                <div class="game">
+                    <!-- 그래프, 접속사람들 -->
+                    <div class="top">
+                        <div class="graph">
+                            <div class="number">
+                                
+                            </div>
+                            <div class="time">
+                                
+                            </div>
+                        </div>
+                        <div class="people">
+                            <!-- 버튼 -->
+                            <div class="select-1">
+                                <button type="button" id="select-1-btn1">베팅한 사람들</button>
+                                <button type="button" id="select-1-btn2">실시간 유저</button>
+                            </div>
+                            <!-- 베팅한 사람들 -->
+                            <div class="bet-people">
+                                <div class="index">
+                                    <div class="index-list-1">이름</div>
+                                    <div class="index-list-1">베팅 머니</div>
+                                    <div class="index-list-1">결과</div>
+                                    <div class="index-list-1">캐쉬 아웃</div>
+                                    <div class="index-list-1">보상</div>
+                                </div>
+                                <div class="betboard">
+                                    
+                                </div>
+                            </div>
+                            <!-- 전체 접속자 -->
+                            <div class="whole-people">
+                                <div class="index">
+                                    <div class="index-list-2">이름</div>
+                                </div>
+                                <div class="wholeboard">
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 채팅, 기록, 베팅 -->
+                    <div class="bottom">
+                        <!-- 채팅, 기록 -->
+                        <div class="chart">
+                            <!-- 버튼 -->
+                            <div class="select-2">
+                                <button type="button" id="select-2-btn1">Record</button>
+                                <button type="button" id="select-2-btn2">Chat</button>
+                            </div>
+                            <!-- 채팅 -->
+                            <div class="chat">
+                                <div class="ear">
+
+                                </div>
+                                <div class="mouth">
+                                    <input type="text" class="tongue">
+                                    <input type="submit" class="sound" value="Send">
+                                </div>
+                            </div>
+                            <!-- 기록 -->
+                            <div class="record">
+                                <div class="record-unit">
+                                    <div class="record-unit-son">게임 베팅</div>
+                                    <div class="record-unit-son">사용자 베팅</div>
+                                    <div class="record-unit-son">결과</div>
+                                    <div class="record-unit-son">베팅 머니</div>
+                                    <div class="record-unit-son">총합</div>
+                                </div>
+                                <div class="recordboard">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 베팅 -->
+                        <div class="right-down">
+                            <div>
+                                <div>
+                                    <p>Betting Amount - Minimum 1000</p>
+                                    <input type="text" class="bet-money">    
+                                </div>
+                                <div>
+                                    <p>Cash-Out Point</p>
+                                    <input type="text" class="bet-cashout">    
+                                </div>
+                                <div>
+                                    <button type="button" class="bet-btn">Betting</button>    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+</body>
+
+</html>

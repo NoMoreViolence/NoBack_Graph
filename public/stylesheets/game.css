@@ -9,11 +9,11 @@ body {
 
 /* placeholder */
 
-::-webkit-input-placeholder {
+ ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: black;
 }
-:-ms-input-placeholder {
+ :-ms-input-placeholder {
   /* IE 10+ */
   color: black;
 }
@@ -337,11 +337,11 @@ body {
 }
 
 /*
-사운드 구현 예정
-.game .bottom .chat .ear .sound {
-  display: flex;
-}
-*/
+  사운드 구현 예정
+  .game .bottom .chat .ear .sound {
+    display: flex;
+  }
+  */
 
 
 /* 채팅 input and button */
@@ -464,17 +464,14 @@ body {
 
 /* 도네이션 */
 
-::-webkit-scrollbar-track {
+ ::-webkit-scrollbar-track {
   border: 1px solid black;
   background-color: #F5F5F5;
 }
-::-webkit-scrollbar {
+ ::-webkit-scrollbar {
   width: 10px;
   background-color: #F5F5F5;
 }
-::-webkit-scrollbar-thumb {
+ ::-webkit-scrollbar-thumb {
   background-color: #000000;
-}
-.middle .donation {
-  margin: auto;
 }

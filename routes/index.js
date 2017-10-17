@@ -7,48 +7,23 @@ const router = express.Router();
 router.get('/', (req, res) => {
   // game, rank, donation, setting
   // ejs에 각각 로딩할 페이지 여부
-  res.render('index', {
-    game: false,
-    rank: false,
-    donation: false,
-    setting: false,
-  });
+  res.render('index');
 });
-// 유저 이름 입력 레이아웃
+// 게임
 router.get('/start', (req, res) => {
-  res.render('index', {
-    game: true,
-    rank: false,
-    donation: false,
-    setting: false,
-  });
+  res.render('game');
 });
 // 랭킹
 router.get('/rank', (req, res) => {
-  res.render('index', {
-    game: false,
-    rank: true,
-    donation: false,
-    setting: false,
-  });
+  res.render('rank');
 });
 // 도네이션
 router.get('/donation', (req, res) => {
-  res.render('index', {
-    game: false,
-    rank: false,
-    donation: true,
-    setting: false,
-  });
+  res.render('donation');
 });
-// 세팅
+// 더보기
 router.get('/more', (req, res) => {
-  res.render('index', {
-    game: false,
-    rank: false,
-    donation: false,
-    setting: true,
-  });
+  res.render('more');
 });
 
 module.exports = router;
