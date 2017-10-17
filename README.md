@@ -7,5 +7,5 @@ Graph Game
 * * *
 
 >How to run
->cd bin
->node www
+>> cd bin
+>> node www
