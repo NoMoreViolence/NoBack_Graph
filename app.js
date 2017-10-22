@@ -10,10 +10,8 @@ const path = require('path');
 const app = express();
 
 const index = require('./routes/index');
-const users = require('./routes/users');
 
 app.use('/', index);
-app.use('/users', users);
 
 // ejs 뷰 엔진
 app.set('views', path.join(__dirname, 'views'));
