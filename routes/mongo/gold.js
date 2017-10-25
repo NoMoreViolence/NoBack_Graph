@@ -8,6 +8,11 @@ const Gold = new mongoose.Schema({
     required: true,
     unique: false,
   },
+  username: {
+    type: String,
+    required: true,
+    unique: false,
+  },
 });
 // 모듈 내보내기
 module.exports = mongoose.model('Gold', Gold);

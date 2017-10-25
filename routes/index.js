@@ -21,7 +21,7 @@ router.get('/rank', (req, res) => {
     } else if (data !== null) {
       console.log(data);
     } else {
-      console.log('Threr is no data');
+      console.log('There is no data');
     }
     return 0;
   });
