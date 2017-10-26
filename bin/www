@@ -307,7 +307,10 @@ io.on('connection', (socket) => {
         } else if (Data !== null && Data.money < money) { // 중복 데이터가 있고, 디비 돈 < 현재 돈
           Data.money = money;
           Data.save();
-        } else { // 중복 데이터가 없을 때
+          console.log(`${username}'s data Updated (money: ${money})`);
+        } else if (Data !== null && Data.money >= money) { // 중복 데이터가 있고, 디비 돈 > 현재 돈
+          console.log(`${username} isn't ranked in the ranking (money: ${money})`);
+        } else { // 중복 데이터 없음
           bank.save((err, data) => { // 데이터 저장
             if (err) {
               console.log(err);
@@ -318,6 +321,8 @@ io.on('connection', (socket) => {
           });
         }
       });
+
+      RECORD.find().sort({ money: -1 }); // 내림차순 정렬
 
       for (let index = 0; index < names.length; index += 1) {
         // 중복체크 for 문

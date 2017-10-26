@@ -14,18 +14,14 @@ router.get('/start', (req, res) => {
 });
 // 랭킹
 router.get('/rank', (req, res) => {
-  RECORD.find((error, data) => {
-    console.log('--- Read all ---');
+  RECORD.find().sort('-money').find((error, data) => {
     if (error) {
       console.log(error);
-    } else if (data !== null) {
-      console.log(data);
-    } else {
-      console.log('There is no data');
+    } else if (data !== null) { // 랭킹 데이터
+      res.render('rank', { data });
     }
     return 0;
   });
-  res.render('rank');
 });
 // 도네이션
 router.get('/donation', (req, res) => {

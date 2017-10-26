@@ -23,6 +23,25 @@
             </div>
         </div>
         <div class="middle">
+            <table>
+                <tbody>
+                    <% let num = 1; %>
+                    <% data.forEach(function (item, index) { %>
+                        <tr>
+                            <td class="rank_num">
+                                <%= num %>
+                            </td>
+                            <td class="rank_username">
+                                <%= item.username %>
+                            </td>
+                            <td class="rank_money">
+                                <%= item.money %>
+                            </td>
+                        </tr>
+                        <% num += 1; %>
+                    <% }) %>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
