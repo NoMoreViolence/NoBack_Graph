@@ -95,3 +95,8 @@ body {
 .menu a:visited {
   color: rgba(61, 121, 212, 0.56);
 }
+.middle {
+  width: calc(100% - 10%);
+  margin: 5%;
+  text-align: center;
+}

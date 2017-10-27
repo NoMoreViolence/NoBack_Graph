@@ -32,4 +32,8 @@ router.get('/more', (req, res) => {
   res.render('more');
 });
 
+router.post('/more', (req, res) => {
+
+});
+
 module.exports = router;

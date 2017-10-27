@@ -87,7 +87,7 @@ body {
 /* 돈 */
 
 .header .moneyboard {
-  width: calc(30% - 1%);
+  width: calc(25% - 1%);
   height: auto;
   margin: 1%;
   display: flex;
