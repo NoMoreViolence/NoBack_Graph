@@ -101,7 +101,6 @@ body {
 .middle {
   width: calc(100% - 2%);
   margin: 1%;
-  height: 550px;
 }
 .middle table {
   width: calc(55% - 4%);
