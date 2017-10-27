@@ -99,7 +99,6 @@ body {
 /* 도네이션 */
 
 .middle .donation {
-  background-color: rgba(84, 187, 199, 0.534);
-  border: 30px solid rgba(84, 187, 199, 0.534);
+  margin: 5%;
   text-align: center;
 }
