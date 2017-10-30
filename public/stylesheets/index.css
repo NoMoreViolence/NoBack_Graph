@@ -98,7 +98,6 @@ body {
 .middle {
   width: calc(100% - 2%);
   margin: 1%;
-  display: flex;
 }
 .welcome {
   width: calc(100% - 2%);

@@ -265,7 +265,7 @@ io.on('connection', (socket) => {
           io.to(socket.id).emit('Report', { // 베팅 성공
             dollar: money,
             spent: bettingmoney,
-            bet: 'Success',
+            bet: 'goal',
             end: value,
             mybetting: cashout,
           });
@@ -287,7 +287,7 @@ io.on('connection', (socket) => {
       io.to(socket.id).emit('Report', { // 베팅 안한 사용자
         dollar: money,
         spent: 0,
-        bet: 'Not Betted',
+        bet: 'Not',
         end: value,
         mybetting: 0,
       });
