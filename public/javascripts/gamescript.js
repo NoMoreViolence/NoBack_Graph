@@ -3,6 +3,7 @@ $('document').ready(() => {
   const socket = io();
   let username = null;
 
+  // $('.came')
 
   // 이름 입력 버튼
   $('.btn_io').on('click', () => {
@@ -117,16 +118,21 @@ $('document').ready(() => {
   };
   let started; // 베팅 준비 시간 체크
   const start = () => {
-    // 0.01초마다 실행
+    // 1초마다 실행
     started = setInterval(Running, 1000);
   };
 
   // 도박 게임 상황
   socket.on('Game', (data) => { // 게임 중
+    clearInterval(started);
+    count = 10;
+    $('.time').empty();
     $('.betboard').empty(); // 베팅 보드 초기화
+    $('.time').empty();
     $('.number').empty();
     $('.number').append(`<div>${data.data}</div>`);
     socket.emit('Game');
+    count = 10;
   });
 
   socket.on('Delay', (data) => { // 게임 대기 중
@@ -139,9 +145,6 @@ $('document').ready(() => {
   });
   // 게임 결과 보고
   socket.on('Report', (data) => {
-    clearInterval(started);
-    count = 10;
-    $('.time').empty();
     if (data.bet === 'Fail') {
       $('.graph').css('background-color', 'rgb(230, 90, 90)');
     } else if (data.bet === 'Good') {

@@ -291,7 +291,7 @@
   }
   .game .bottom .chat .mouth .tongue {
     width: calc(85% - 2%);
-    height: auto;
+    height: 25px;
     margin: 1%;
     padding: 0;
     border: 1px solid rgba(255, 255, 255, 0.54);
@@ -301,7 +301,7 @@
   }
   .game .bottom .chat .mouth .sound {
     width: calc(15% - 2%);
-    height: auto;
+    height: 25px;
     margin: 1%;
     padding: 0;
     border: none;

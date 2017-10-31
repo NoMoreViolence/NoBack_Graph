@@ -265,14 +265,14 @@ io.on('connection', (socket) => {
           io.to(socket.id).emit('Report', { // 베팅 성공
             dollar: money,
             spent: bettingmoney,
-            bet: 'goal',
+            bet: 'Good',
             end: value,
             mybetting: cashout,
           });
           io.emit('Board-Report', { // 실시간 기록 보내기
             name: username,
             betmoney: bettingmoney,
-            grade: 'Success',
+            grade: 'Goal',
             mybetting: cashout,
             spent: `+${(bettingmoney * cashout) + bettingmoney}`,
           });
