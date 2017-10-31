@@ -144,9 +144,9 @@ $('document').ready(() => {
     $('.time').empty();
     if (data.bet === 'Fail') {
       $('.graph').css('background-color', 'rgb(230, 90, 90)');
-    } else if (data.bet === 'Success') {
+    } else if (data.bet === 'Good') {
       $('.graph').css('background-color', 'rgb(168, 219, 58)');
-    } else if (data.bet === 'Not Betted') {
+    } else if (data.bet === 'Not') {
       $('.graph').css('background-color', 'rgb(100, 100, 100)');
     }
     $('.bet-btn').css('background-color', 'rgba(255, 255, 255, 0.54)'); // 버튼 색 되돌리기
