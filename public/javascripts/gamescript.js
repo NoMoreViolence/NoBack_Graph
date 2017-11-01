@@ -36,6 +36,15 @@ $('document').ready(() => {
       $('.money').append(`${data.cash}`);
       $('.namespace').css('display', 'none');
       $('.game').css('display', 'block');
+    }
+
+    if (data.status === 1 || data.status === 2) {
+      $('.number').empty();
+      $('.number').append('<div>Playing ...</div>');
+      return;
+    } else if (data.status === 0) {
+      $('.number').empty();
+      $('.number').append('<div>Betting Time ...</div>'); // 게임 보드 초기화
       return;
     }
     alert('Already Someone Chosen Your name, Choice another.');
@@ -122,17 +131,42 @@ $('document').ready(() => {
     started = setInterval(Running, 1000);
   };
 
-  // 도박 게임 상황
-  socket.on('Game', (data) => { // 게임 중
+  let num = 0; // 카운트
+  const R = () => {
+    $('.number').empty();
+    // 현재 시간
+    num += 0.01;
+    const NUM = num.toFixed(2);
+    $('.number').append(NUM);
+  };
+  let interval; // 베팅 준비 시간 체크
+  const graphstart = () => {
+    // 0.01초마다 실행
+    interval = setInterval(R, 10);
+  };
+
+  socket.on('Start', () => {
+    // 시간 초기화
+    $('.time').empty();
+
+    // delay interval 초기화
     clearInterval(started);
     count = 10;
-    $('.time').empty();
+
+    // 진짜 게임 시작
+    graphstart();
+  });
+
+  // 도박 게임 상황
+  socket.on('Game', (data) => { // 게임 중
+    clearInterval(interval);
+    num = 0;
+    NUM = 0;
     $('.betboard').empty(); // 베팅 보드 초기화
-    $('.time').empty();
-    $('.number').empty();
+    $('.time').empty(); // 시간 초기화
+    $('.number').empty(); // 게임 보드 초기화
     $('.number').append(`<div>${data.data}</div>`);
     socket.emit('Game');
-    count = 10;
   });
 
   socket.on('Delay', (data) => { // 게임 대기 중
