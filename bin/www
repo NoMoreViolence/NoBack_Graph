@@ -8,7 +8,7 @@ const server = require('http').createServer(app);
 const DDBB = [];
 // db();
 
-const RECORD = require('./../routes/mongo/gold.js');
+// const RECORD = require('./../routes/mongo/gold.js');
 
 // 포트 번호 함수
 const normalizePort = (val) => {
